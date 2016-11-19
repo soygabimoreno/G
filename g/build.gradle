@@ -1,90 +1,31 @@
-//apply plugin: 'com.android.library'
-//apply plugin: 'com.jfrog.bintray'
-//apply plugin: 'com.github.dcendents.android-maven'
-//
-//version = "0.0.1"
-//android {
-//    compileSdkVersion 25
-//    buildToolsVersion "25.0.0"
-//
-//    defaultConfig {
-//        minSdkVersion 15
-//        targetSdkVersion 25
-//        versionCode 1
-//        versionName version
-//
-//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//
-//    }
-//    buildTypes {
-//        release {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
-//    }
-//}
-//
-//dependencies {
-//    compile fileTree(dir: 'libs', include: ['*.jar'])
-//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    })
-//    compile 'com.android.support:appcompat-v7:25.0.0'
-//    testCompile 'junit:junit:4.12'
-//}
-//
-//ext {
-//    bintrayRepo = 'maven'
-//    bintrayName = 'com.gabrielmorenoibarra.g'
-//
-//    publishedGroupId = 'com.gabrielmorenoibarra.g'
-//    libraryName = 'G'
-//    artifact = 'com.gabrielmorenoibarra.g'
-//
-//    libraryDescription = 'Android Helper Library'
-//
-//    siteUrl = 'https://github.com/GabrielMorenoIbarra/G'
-//    gitUrl = 'https://github.com/GabrielMorenoIbarra/G.git'
-//
-//    libraryVersion = version
-//
-//    developerId = 'GabrielMorenoIbarra'
-//    developerName = 'Gabriel Moreno'
-//    developerEmail = 'gabrielmorenoibarra@gmail.com'
-//
-//    licenseName = 'The Apache Software License, Version 2.0'
-//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//    allLicenses = ["Apache-2.0"]
-//}
-//
-//apply from: 'https://raw.githubusercontent.com/GabrielMorenoIbarra/JCenter/master/installv1.gradle'
-////apply from: 'https://raw.githubusercontent.com/GabrielMorenoIbarra/JCenter/master/bintrayv1.gradle'
-
 apply plugin: 'com.android.library'
 
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'g'
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
-    publishedGroupId = 'com.gabrielmorenoibarra.g'
-    libraryName = 'G'
-    artifact = 'g'
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
 
-    libraryDescription = 'Android Helper Library'
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-    siteUrl = 'https://github.com/nuuneoi/FBLikeAndroid'
-    gitUrl = 'https://github.com/nuuneoi/FBLikeAndroid.git'
-
-    libraryVersion = '0.0.1'
-
-    developerId = 'GabrielMorenoIbarra'
-    developerName = 'Gabriel Moreno'
-    developerEmail = 'gabrielmorenoibarra@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
-apply from: 'https://raw.githubusercontent.com/GabrielMorenoIbarra/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/GabrielMorenoIbarra/JCenter/master/bintrayv1.gradle'
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    testCompile 'junit:junit:4.12'
+}
