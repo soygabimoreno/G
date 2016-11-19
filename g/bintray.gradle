@@ -30,7 +30,7 @@ bintray {
 
     configurations = ['archives']
     pkg {
-        repo = 'maven'
+        repo = 'G'
         name = 'g'
         desc = 'Android Helper Library'
         websiteUrl = 'https://github.com/GabrielMorenoIbarra/G'
