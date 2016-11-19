@@ -22,7 +22,7 @@ install {
                 }
                 developers {
                     developer {
-                        id 'GabrielMorenoIbarra'
+                        id 'gabrielmorenoibarra'
                         name 'Gabriel Moreno'
                         email 'gabrielmorenoibarra@gmail.com'
                     }
