@@ -1,0 +1,39 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.gabrielmorenoibarra.g'
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                groupId 'com.gabrielmorenoibarra.g'
+                artifactId 'g'
+
+                name 'G'
+                description 'Android Helper Library'
+                url 'https://github.com/GabrielMorenoIbarra/G'
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'GabrielMorenoIbarra'
+                        name 'Gabriel Moreno'
+                        email 'gabrielmorenoibarra@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/GabrielMorenoIbarra/G.git'
+                    developerConnection 'https://github.com/GabrielMorenoIbarra/G.git'
+                    url 'https://github.com/GabrielMorenoIbarra/G'
+
+                }
+            }
+        }
+    }
+}
