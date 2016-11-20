@@ -1,4 +1,4 @@
-package com.gabrielmorenoibarra.g;
+package com.gabrielmorenoibarra.g.sample;
 
 import org.junit.Test;
 

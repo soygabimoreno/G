@@ -15,6 +15,10 @@ public class G {
 
     /**
      * Check for all possible Internet providers.
+     * This method requires the following permissions on Manifest:
+     * <uses-permission android:name="android.permission.INTERNET"/>
+     * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+     * <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
      * @param context Related context.
      * @return true if there is an available connection.
      */
