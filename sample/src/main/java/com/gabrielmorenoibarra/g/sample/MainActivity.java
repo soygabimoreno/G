@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO: I have to set g as a module for sample
+        // TODO: I have to set g as a module for sample 
 
         if (G.isConnectedToInternet(this)) {
             Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
