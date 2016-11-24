@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "com.gabrielmorenoibarra.g.sample"
@@ -30,5 +30,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.gabrielmorenoibarra.g:g:0.0.1'
+//    compile 'com.gabrielmorenoibarra.g:g:0.0.1'
+    compile project(':g')
 }
