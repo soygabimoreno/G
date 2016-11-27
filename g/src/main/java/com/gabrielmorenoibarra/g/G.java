@@ -38,6 +38,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.gabrielmorenoibarra.g.java.GJavaTools;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -502,7 +504,7 @@ public class G {
     }
 
     /**
-     * @param context
+     * @param context Related context.
      * @return true when screen is on.
      */
     public static boolean isScreenOn(Context context) {
