@@ -20,6 +20,7 @@ Simply call any method directly over `G` or `GJavaTools` classes in a static way
 
 ```java
 G.metodName();
+GJavaTools.metodName();
 ```
 
 Or use easily any of the other classes included:
