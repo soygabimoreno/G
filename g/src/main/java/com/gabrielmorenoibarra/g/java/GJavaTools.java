@@ -231,4 +231,13 @@ public class GJavaTools {
         }
         System.out.println(fileName + " size: " + (new File(fileName).length() / divisor) + " " + magnitude);
     }
+
+    /**
+     * @param number Number to round.
+     * @param decimals Quantity of decimals desired.
+     * @return a specific rounded number un with its corresponding decimals.
+     */
+    public static float round(float number, int decimals) {
+        return (float) (Math.round(number * Math.pow(10, decimals)) / Math.pow(10, decimals));
+    }
 }
