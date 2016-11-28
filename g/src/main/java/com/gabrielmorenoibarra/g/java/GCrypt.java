@@ -39,7 +39,7 @@ public class GCrypt {
     /**
      * @param text Message to encrypt.
      * @return an encrypted message.
-     * @throws Exception
+     * @throws Exception if empty string.
      */
     public String encrypt(String text) throws Exception {
         if (text == null || text.length() == 0) throw new Exception("Empty string");
@@ -56,7 +56,7 @@ public class GCrypt {
     /**
      * @param code Message to decrypt.
      * @return a decrypted message.
-     * @throws Exception
+     * @throws Exception if empty string.
      */
     public String decrypt(String code) throws Exception {
         if (code == null || code.length() == 0) throw new Exception("Empty string");

@@ -64,10 +64,7 @@ public class G {
 
     /**
      * Check for all possible Internet providers.
-     * This method requires the following permissions on Manifest:
-     * <uses-permission android:name="android.permission.INTERNET"/>
-     * <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-     * <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+     * This method requires the following permissions on Manifest: INTERNET, ACCESS_WIFI_STATE and ACCESS_NETWORK_STATE.
      * @param context Related context.
      * @return true if there is an available connection.
      */
@@ -104,6 +101,7 @@ public class G {
     /**
      * Create a custom <code>ProgressDialog</code>.
      * @param context Related context.
+     * @param layoutResID Related resource.
      * @param isCancelable Whether it has to be cancelable or not.
      * @return the <code>ProgressDialog</code>.
      */
@@ -272,6 +270,8 @@ public class G {
 
     /**
      * Log key hashes for a specific package. It is util for deploy facebook apps for example.
+     * @param context Related context.
+     * @param packageName Name of the application package.
      */
     public static void logKeyHashes(Context context, String packageName) {
         final String TAG = Thread.currentThread().getStackTrace()[2].getMethodName();
@@ -323,6 +323,7 @@ public class G {
      * Create and return a <code>MediaPlayer</code> for audio playback.
      * @param context Related context.
      * @param assetsFilePath Path to the media resource inside assets folder.
+     * @param streamType the audio stream type.
      * @return a prepared <code>MediaPlayer</code> ready to play.
      */
     public static MediaPlayer createMediaPlayer(Context context, String assetsFilePath, int streamType) {
