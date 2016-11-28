@@ -11,16 +11,26 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile 'com.gabrielmorenoibarra.g:g:0.0.1'
+    compile 'com.gabrielmorenoibarra.g:g:0.1.0'
 }
 ```
 
 ## Use
-Simply call any method directly over G class:
+Simply call any method directly over `G` or `GJavaTools` classes in a static way:
 
 ```java
 G.metodName();
+GJavaTools.metodName();
 ```
+
+Or use easily any of the other classes included:
+
+- `GCrypt` Utility for encrypting/decrypting messages.
+- `GEmoji` Container with strings that will be parsed as emojis.
+- `GISO` Tool for getting the country ISO from country code and vice versa.
+- `GLastModified` Obtain last modified date (in ms) of a remote file.
+- `GProcessing` Audio Processing Tools.
+- `GTicToc` Utility to measure times between lines of code during execution.
 
 ## Questions and Suggestions
 [gabrielmorenoibarra@gmail.com](mailto:gabrielmorenoibarra@gmail.com)
