@@ -11,25 +11,15 @@ import java.util.Date;
  */
 public class GLastModified {
 
-    private Thread thread;
+    private final Thread thread;
     private boolean isCompleted;
-    private String urlName;
     private long lastModified;
 
     /**
      * Constructor.
      * @param urlName Address of the resource remote file to get its last modified date.
      */
-    public GLastModified(String urlName) {
-        this.urlName = urlName;
-    }
-
-    /**
-     * Obtain the number of seconds since 1970 of last modification of the file requested.
-     * This method is blocking.
-     * @return a long with the date.
-     */
-    public long getSeconds() {
+    public GLastModified(final String urlName) {
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -50,8 +40,15 @@ public class GLastModified {
                 }
             }
         });
-        thread.start();
+    }
 
+    /**
+     * Obtain the number of ms since 1970 of last modification of the file requested.
+     * This method is blocking.
+     * @return a long with the date.
+     */
+    public long getMillis() {
+        thread.start();
         synchronized (thread) {
             long timeBefore = new Date().getTime(); // Getting current time
             final int TIME_OUT = 3000;
