@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        Date d = new Date(new GLastModified("http://gabrielmorenoibarra.com/images/pepe.txt").getMillis());
+        Date d = new Date(new GLastModified("http://irishpubvalencia.es/app/data.json", "irish", "pub").getMillis());
         String s = d.toString();
 
 //        byte[] a = {1, 2, 3};
