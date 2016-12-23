@@ -1,5 +1,7 @@
 package com.gabrielmorenoibarra.g.java;
 
+import android.util.Base64;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -12,6 +14,8 @@ import java.util.Date;
 public class GLastModified {
 
     private final Thread thread;
+    private String user;
+    private String password;
     private boolean isCompleted;
     private long lastModified;
 
@@ -28,6 +32,9 @@ public class GLastModified {
                 try {
                     url = new URL(urlName);
                     conn = url.openConnection();
+                    if (user != null && password != null) {
+                        conn.setRequestProperty("Authorization", "Basic " + Base64.encodeToString((user + ":" + password).getBytes(), Base64.NO_WRAP));
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -40,6 +47,18 @@ public class GLastModified {
                 }
             }
         });
+    }
+
+    /**
+     * Constructor.
+     * @param urlName Address of the resource remote file to get its last modified date.
+     * @param user User authorization if needed to access to the host. It makes a pair with password.
+     * @param password Password authorization if needed to the host. It makes a pair with user.
+     */
+    public GLastModified(final String urlName, String user, String password) {
+        this(urlName);
+        this.user = user;
+        this.password = password;
     }
 
     /**
