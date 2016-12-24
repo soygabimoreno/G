@@ -11,7 +11,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile 'com.gabrielmorenoibarra.g:g:0.1.0'
+    compile 'com.gabrielmorenoibarra.g:g:0.1.3'
 }
 ```
 
