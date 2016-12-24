@@ -558,4 +558,13 @@ public class G {
         }
         return -1;
     }
+
+    /**
+     * Simply close and restart an Activity.
+     * @param activity Activity to restart.
+     */
+    public static void refreshActivity(Activity activity) {
+        activity.finish();
+        activity.startActivity(activity.getIntent());
+    }
 }
