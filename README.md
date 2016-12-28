@@ -36,7 +36,7 @@ Or use easily any of the other classes included:
 [gabrielmorenoibarra@gmail.com](mailto:gabrielmorenoibarra@gmail.com)
 
 ## License
-    Copyright 2016 Gabriel Moreno.
+    Copyright 2016-2017 Gabriel Moreno.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
