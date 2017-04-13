@@ -441,7 +441,7 @@ public class G {
                     view.setEnabled(true); // Enable again all of them
                 }
             }
-        }, 3000);
+        }, 1000);
     }
 
     /**
