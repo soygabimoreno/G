@@ -1,0 +1,9 @@
+For uploading a new version of the library, execute on terminal:
+
+- Linux:
+1. bash gradlew install
+2. bash gradlew bintrayUpload
+
+- Windows:
+1. gradlew install
+2. gradlew bintrayUpload
