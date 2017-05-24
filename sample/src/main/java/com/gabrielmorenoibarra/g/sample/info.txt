@@ -1,0 +1,15 @@
+For uploading a new version of the library
+==========================================
+
+1. Update version on 'bintray.gradle'
+
+2. Execute on terminal:
+    - Linux:
+    a. bash gradlew install
+    b. bash gradlew bintrayUpload
+
+    - Windows:
+    a. gradlew install
+    b. gradlew bintrayUpload
+
+3. Commit, tag and push changes

@@ -378,8 +378,7 @@ public class G {
      */
     public static boolean isPackageInstalled(Context context, String packageName) {
         try {
-            context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-            return true;
+            return context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES) != null;
         } catch (PackageManager.NameNotFoundException e) {
             // Not show exception required
             return false;
