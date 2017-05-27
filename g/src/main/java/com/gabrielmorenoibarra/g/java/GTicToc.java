@@ -23,7 +23,7 @@ public class GTicToc {
      */
     public void toc() {
         if (tag != null) tag += ": ";
-        System.out.println("TIME: " + tag +  (System.currentTimeMillis() - tic) + " ms");
+        System.out.println("TIME: " + tag + (System.currentTimeMillis() - tic) + " ms");
     }
 
     /**
@@ -31,6 +31,6 @@ public class GTicToc {
      */
     public void tocNano() {
         if (tag != null) tag += ": ";
-        System.out.println("TIME: " + tag +  (System.nanoTime() - tic) + " ns");
+        System.out.println("TIME: " + tag + (System.nanoTime() - tic) + " ns");
     }
 }
