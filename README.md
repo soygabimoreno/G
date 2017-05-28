@@ -24,10 +24,10 @@ GJavaTools.metodName();
 ...
 ```
 ## Android classes
-- `G` X
-- `GFile` X
-- `GGraphics` X
-- `GPermission` X
+- `G` Android Tools.
+- `GFile` Utilities to deal with files.
+- `GGraphics` Static utilities related with graphic side.
+- `GPermission` This class contains static methods that use permissions.
 
 ## Pure Java classes
 - `GJavaTools` Generic Java utilities.
