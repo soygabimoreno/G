@@ -4,38 +4,50 @@ This is an **Android Helper Library**.
 
 It consists in a collection of static methods that perform common functionalities.
 
-## Get started
+# Get started
 Just add dependency in your `build.gradle` module (`G` is available in jcenter):
 ```
 repositories {
     jcenter()
 }
 dependencies {
-    compile 'com.gabrielmorenoibarra.g:g:0.1.4'
+    compile 'com.gabrielmorenoibarra.g:g:0.2.1'
 }
 ```
 
-## Use
-Simply call any method directly over `G` or `GJavaTools` classes in a static way:
+# Use
+Simply call any method directly over classes in a static way:
 
 ```java
 G.metodName();
 GJavaTools.metodName();
+...
 ```
+## Android classes
+- `G` X
+- `GFile` X
+- `GGraphics` X
+- `GPermission` X
 
-Or use easily any of the other classes included:
+## Pure Java classes
+- `GJavaTools` Generic Java utilities.
+- `GArray` Array tools.
+- `GEmoji` Container with strings that will be parsed as emojis.
+- `GProcessing` Audio Processing Tools.
+- `GResampling` Resampling tools: decimate, interpolate.
+- `GValidations` Login tools.
+
+Or use easily any of the other pure Java classes included:
 
 - `GCrypt` Utility for encrypting/decrypting messages.
-- `GEmoji` Container with strings that will be parsed as emojis.
 - `GISO` Tool for getting the country ISO from country code and vice versa.
 - `GLastModified` Obtain last modified date (in ms) of a remote file.
-- `GProcessing` Audio Processing Tools.
 - `GTicToc` Utility to measure times between lines of code during execution.
 
-## Questions and Suggestions
+# Questions and Suggestions
 [gabrielmorenoibarra@gmail.com](mailto:gabrielmorenoibarra@gmail.com)
 
-## License
+# License
     Copyright 2016-2017 Gabriel Moreno.
 
     Licensed under the Apache License, Version 2.0 (the "License");
