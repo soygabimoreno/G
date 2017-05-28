@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Camera preview management.
+ * Require permission: CAMERA.
  * Created by Gabriel Moreno on 2017-05-28.
  */
 public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callback {
