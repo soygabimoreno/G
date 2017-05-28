@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Log utilities
+ * Static Log Utilities.
  * Created by Gabriel Moreno on 2017-05-28.
  */
 public class GLog {

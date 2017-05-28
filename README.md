@@ -11,7 +11,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile 'com.gabrielmorenoibarra.g:g:0.2.1'
+    compile 'com.gabrielmorenoibarra.g:g:0.3.1'
 }
 ```
 
@@ -27,12 +27,21 @@ GJavaTools.metodName();
 - `G` Android Tools.
 - `GFile` Utilities to deal with files.
 - `GGraphics` Static utilities related with graphic side.
+- `GLog` Static Log Utilities.
+- `GMedia` Static Media Utilities.
 - `GPermission` This class contains static methods that use permissions.
 
+Or use easily any of the other Android classes included:
+
+- `GCameraPreview` Camera preview management.
+- `GLocation` Location management.
+- `GOnClickAndDoubleClickListener` Touch Listener.
+- `GShowHideKeyboard` Utility to show or hide the soft keyboard.
+
 ## Pure Java classes
-- `GJavaTools` Generic Java utilities.
 - `GArray` Array tools.
 - `GEmoji` Container with strings that will be parsed as emojis.
+- `GJavaTools` Generic Java utilities.
 - `GProcessing` Audio Processing Tools.
 - `GResampling` Resampling tools: decimate, interpolate.
 - `GValidations` Login tools.

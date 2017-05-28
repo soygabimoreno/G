@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * Media utilities.
+ * Static Media Utilities.
  * Created by Gabriel Moreno on 2017-05-28.
  */
 public class GMedia {
