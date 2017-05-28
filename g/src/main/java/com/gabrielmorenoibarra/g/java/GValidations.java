@@ -1,4 +1,4 @@
-package com.gabrielmorenoibarra.g;
+package com.gabrielmorenoibarra.g.java;
 
 /**
  * Utilities for making validations.
