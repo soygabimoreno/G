@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+/**
+ * Utilities to deal with files.
+ * Created by Gabriel Moreno on 2017-05-28.
+ */
 public class GFile {
 
     /**
