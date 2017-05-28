@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * This class contains static methods that uses permissions.
+ * This class contains static methods that use permissions.
  * There is to include them on Manifest if they are called.
  * Created by Gabriel Moreno on 2017-05-27.
  */
