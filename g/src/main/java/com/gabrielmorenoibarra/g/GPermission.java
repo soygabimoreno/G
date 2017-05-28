@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class GPermission {
 
     /**
-     * Require GET_ACCOUNTS: <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+     * Require GET_ACCOUNTS permission.
      * @param context Related context.
      * @return an <code>ArrayList</code> with all not repeated user's email addresses.
      */
@@ -36,7 +36,7 @@ public class GPermission {
 
     /**
      * This is not recommended.
-     * Require READ_PHONE_STATE: <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+     * Require READ_PHONE_STATE permission.
      * @param context Related context.
      * @return the device phone number if it has any or null if it is not available.
      */
@@ -46,7 +46,7 @@ public class GPermission {
 
     /**
      * This is not recommended.
-     * Require READ_PHONE_STATE: <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+     * Require READ_PHONE_STATE permission.
      * @param context Related context.
      * @return the device ID if it has any or null if it is not available.
      */

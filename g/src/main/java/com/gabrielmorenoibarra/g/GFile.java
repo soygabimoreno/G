@@ -69,6 +69,7 @@ public class GFile {
     /**
      * Delete a specific file within internal storage.
      * @param context Related context.
+     * @param fileName File name.
      * @return a boolean whether operation is success or not.
      */
     public static boolean deleteInternalFile(Context context, String fileName) {
