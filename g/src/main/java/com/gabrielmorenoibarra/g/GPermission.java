@@ -2,8 +2,12 @@ package com.gabrielmorenoibarra.g;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.util.Patterns;
 
 import java.util.ArrayList;
@@ -18,7 +22,7 @@ import java.util.regex.Pattern;
 public class GPermission {
 
     /**
-     * Require GET_ACCOUNTS permission.
+     * Require permission: GET_ACCOUNTS.
      * @param context Related context.
      * @return an <code>ArrayList</code> with all not repeated user's email addresses.
      */
@@ -32,6 +36,40 @@ public class GPermission {
             }
         }
         return G.removeRepetitions(emails);
+    }
+
+    /**
+     * Require permission: READ_CONTACTS.
+     * @param context Application context to ensure it is enabled.
+     * @return all the emails from contact provider.
+     */
+    public static ArrayList<String> getEmails(Context context) {
+        final String TAG = Thread.currentThread().getStackTrace()[2].getMethodName();
+        ArrayList<String> emails = new ArrayList<>();
+        ContentResolver cr = context.getContentResolver();
+        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                Cursor cur1 = cr.query(
+                        ContactsContract.CommonDataKinds.Email.CONTENT_URI, null,
+                        ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
+                        new String[]{id}, null);
+                if (cur1 != null) {
+                    while (cur1.moveToNext()) {
+//                        String name = cur1.getString(cur1.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)); // To get the name
+                        String email = cur1.getString(cur1.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                        Log.d(TAG, "email: " + email);
+                        if (email != null) {
+                            emails.add(email);
+                        }
+                    }
+                    cur1.close();
+                }
+            }
+            cursor.close();
+        }
+        return emails;
     }
 
     /**

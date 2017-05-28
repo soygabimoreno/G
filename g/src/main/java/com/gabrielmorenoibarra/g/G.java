@@ -237,17 +237,6 @@ public class G {
     }
 
     /**
-     * Hide soft keyboard.
-     * @param context Related context.
-     */
-    public static void hideKeyboard(Context context) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        View v = ((Activity) context).getCurrentFocus(); // Check we have some view focused
-        if (v == null) return;
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
-
-    /**
      * @param startX Start position in the abscissa.
      * @param endX End position in the abscissa.
      * @param startY Start position in the ordinate.
@@ -266,6 +255,14 @@ public class G {
      */
     public static boolean hasCamera(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+    /**
+     * @param context Related context.
+     * @return whether the device has a flash available or not.
+     */
+    public static boolean hasFlash(Context context) {
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
     /**
@@ -317,57 +314,6 @@ public class G {
             return phoneMsgFmt.format(phoneNumArr);
         }
         return number;
-    }
-
-    /**
-     * Create and return a <code>MediaPlayer</code> for audio playback.
-     * @param context Related context.
-     * @param assetsFilePath Path to the media resource inside assets folder.
-     * @param streamType the audio stream type.
-     * @return a prepared <code>MediaPlayer</code> ready to play.
-     */
-    public static MediaPlayer createMediaPlayer(Context context, String assetsFilePath, int streamType) {
-        try {
-            AssetManager asset = context.getAssets();
-            AssetFileDescriptor afd = asset.openFd(assetsFilePath);
-            MediaPlayer player = new MediaPlayer();
-            player.setAudioStreamType(streamType);
-            player.reset(); // Making sure it is in IDLE state...
-            player.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            player.prepare();
-            afd.close();
-            return player;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Plays a file with MediaPlayer.
-     * @param fileName Absolute path name of the file to play.
-     * @param looping Indicates if multimedia file has to be played as a loop.
-     */
-    public static void play(String fileName, boolean looping) {
-        MediaPlayer mp = new MediaPlayer();
-        FileInputStream fs = null;
-        FileDescriptor fd = null;
-        try {
-            fs = new FileInputStream(new File(fileName));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            if (fs != null) {
-                fd = fs.getFD();
-            }
-            mp.setDataSource(fd);
-            mp.prepare();
-            mp.setLooping(looping);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mp.start();
     }
 
     /**
@@ -483,27 +429,6 @@ public class G {
     }
 
     /**
-     * Calculate size in Density Independent Pixel (dp or dip) depending on device screen density.
-     * @param context Related context.
-     * @param px Size to convert.
-     * @return size in dp.
-     */
-    public static int pxToDp(Context context, int px) {
-        return (int) Math.floor(px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
-
-    }
-
-    /**
-     * Calculate size in pixels depending on device screen density.
-     * @param context Related context.
-     * @param dp Independent ize to convert.
-     * @return size in px.
-     */
-    public static int dpToPx(Context context, int dp) {
-        return (int) Math.floor(dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
-    }
-
-    /**
      * @param context Related context.
      * @return true when screen is on.
      */
@@ -522,40 +447,6 @@ public class G {
             //noinspection deprecation
             return pm.isScreenOn();
         }
-    }
-
-    /**
-     * Checks if external storage is available for read and write.
-     * @return true if available.
-     */
-    public static boolean isExternalStorageWritable() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
-    /**
-     * Checks if external storage is available to at least read.
-     * @return true if available.
-     */
-    public static boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
-    }
-
-    /**
-     * Copy a <code>File</code>.
-     * @param dirName Name of the directory to storage on external memory.
-     * @param from Source file name. E.g.: context.getFilesDir().getPath() + "/share.wav";
-     * @param to Destiny file name. E.g.: dir.getAbsolutePath() + "/share.wav"
-     * @return the file size (number of bytes). If it returns -1, it is due to the action failed.
-     */
-    public static int copyFileToExternalStorage(String dirName, String from, String to) {
-        File dir = new File(Environment.getExternalStorageDirectory(), dirName);
-        if (!dir.exists()) {
-            if (dir.mkdirs()) {
-                return GJavaTools.copyFile(from, to);
-            }
-        }
-        return -1;
     }
 
     /**

@@ -2,16 +2,40 @@ package com.gabrielmorenoibarra.g;
 
 import android.app.Activity;
 import android.content.Context;
+import android.hardware.Camera;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 /**
  * Static utilities related with graphic side.
  * Created by Gabriel Moreno on 2017-05-27.
  */
 public class GGraphics {
+
+    /**
+     * Calculate size in Density Independent Pixel (dp or dip) depending on device screen density.
+     * @param context Related context.
+     * @param px Size to convert.
+     * @return size in dp.
+     */
+    public static int pxToDp(Context context, int px) {
+        return (int) Math.floor(px / ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+
+    }
+
+    /**
+     * Calculate size in pixels depending on device screen density.
+     * @param context Related context.
+     * @param dp Independent ize to convert.
+     * @return size in px.
+     */
+    public static int dpToPx(Context context, int dp) {
+        return (int) Math.floor(dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
 
     /**
      * Log display metrics of the device.
@@ -71,5 +95,39 @@ public class GGraphics {
             lp.height = (int) ((float) screenWidth * videoProportion);
         }
         v.setLayoutParams(lp);
+    }
+
+    /**
+     * Calculate the optimal preview size among several sizes.
+     * @param sizes List screen sizes.
+     * @param width Width of the device screen.
+     * @param height Height of the device screen.
+     * @return the proper size.
+     */
+    public static Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int width, int height) {
+        final double ASPECT_TOLERANCE = 0.05;
+        double targetRatio = (double) width / height;
+        if (sizes == null) return null;
+        Camera.Size optimalSize = null;
+        double minDiff = Double.MAX_VALUE;
+        for (Camera.Size size : sizes) { // Find size
+            double ratio = (double) size.height / size.width;
+            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
+            if (Math.abs(size.height - height) < minDiff) {
+                optimalSize = size;
+                minDiff = Math.abs(size.height - height);
+            }
+        }
+
+        if (optimalSize == null) {
+            minDiff = Double.MAX_VALUE;
+            for (Camera.Size size : sizes) {
+                if (Math.abs(size.height - height) < minDiff) {
+                    optimalSize = size;
+                    minDiff = Math.abs(size.height - height);
+                }
+            }
+        }
+        return optimalSize;
     }
 }
