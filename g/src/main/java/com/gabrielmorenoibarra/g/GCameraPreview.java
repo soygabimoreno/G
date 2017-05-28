@@ -97,6 +97,7 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
 
     /**
      * Switch camera, from the front and the back and vice versa.
+     * @param cameraFacing Indicate if it is front camera: CAMERA_FACING_FRONT or rear camera: CAMERA_FACING_BACK.
      */
     public void switchCamera(int cameraFacing) {
         Log.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());

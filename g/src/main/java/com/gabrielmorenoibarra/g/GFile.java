@@ -31,6 +31,7 @@ public class GFile {
 
     /**
      * Copy a <code>Uri</code>.
+     * @param context Related context.
      * @param uri Source uri.
      * @param to Destiny file name.
      * @return the file size in number of bytes. If it returns -1, it is due to the action failed.
