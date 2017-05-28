@@ -3,6 +3,8 @@ package com.gabrielmorenoibarra.g;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Camera;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -129,5 +131,33 @@ public class GGraphics {
             }
         }
         return optimalSize;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void hideSystemUI(Activity activity) {
+        activity.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public static void showSystemUI(Activity activity) {
+        activity.getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    public static void addMarginInsetTop(int topMargin, View v) {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+        params.topMargin += topMargin;
+        v.setLayoutParams(params);
+    }
+
+    public static void addMarginInsetBottom(int bottomMargin, View v) {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+        params.bottomMargin += bottomMargin;
+        v.setLayoutParams(params);
     }
 }

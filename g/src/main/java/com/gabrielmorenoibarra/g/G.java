@@ -14,6 +14,7 @@ import android.content.pm.Signature;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.display.DisplayManager;
 import android.media.MediaPlayer;
@@ -36,6 +37,7 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.gabrielmorenoibarra.g.java.GJavaTools;
@@ -50,10 +52,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -62,13 +68,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class G {
 
-    /**
-     * Check for all possible Internet providers.
-     * This method requires the following permissions on Manifest: INTERNET, ACCESS_WIFI_STATE and ACCESS_NETWORK_STATE.
+     /**
+      * Require permissions: INTERNET, ACCESS_WIFI_STATE and ACCESS_NETWORK_STATE.
      * @param context Related context.
-     * @return true if there is an available connection.
+     * @return the name of the connected network or null if there in no internet.
      */
-    public static boolean isConnectedToInternet(Context context) {
+    public static String getConnectedNetworkName(Context context) {
         final String TAG = Thread.currentThread().getStackTrace()[2].getMethodName();
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { // If we are upper API 21
@@ -77,8 +82,9 @@ public class G {
             for (Network mNetwork : networks) {
                 networkInfo = connectivityManager.getNetworkInfo(mNetwork);
                 if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                    Log.d(TAG, "Network " + networkInfo.getTypeName() + " connected.");
-                    return true;
+                    String netWorkName = networkInfo.getTypeName();
+                    Log.i(TAG, networkInfo.getTypeName() + " network connected!");
+                    return netWorkName;
                 }
             }
         } else { // API < 21
@@ -88,14 +94,15 @@ public class G {
                 if (info != null) {
                     for (NetworkInfo anInfo : info) {
                         if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                            Log.d(TAG, "Network " + anInfo.getTypeName() + " connected.");
-                            return true;
+                            String netWorkName = anInfo.getTypeName();
+                            Log.i(TAG, anInfo.getTypeName() + " network connected!");
+                            return netWorkName;
                         }
                     }
                 }
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -287,36 +294,6 @@ public class G {
     }
 
     /**
-     * Format a number of milliseconds to '00:00:00' format.
-     * @param milliseconds Number of milliseconds.
-     * @return a <code>String</code> formatted.
-     */
-    public static String toTimeFormat(long milliseconds) {
-        return String.format(Locale.getDefault(), "%02d:%02d:%02d",
-                TimeUnit.MILLISECONDS.toHours(milliseconds),
-                TimeUnit.MILLISECONDS.toMinutes(milliseconds) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(milliseconds)),
-                TimeUnit.MILLISECONDS.toSeconds(milliseconds) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds)));
-    }
-
-    /**
-     * Format a String as a phone number.
-     * @param number the phone number.
-     * @return a <code>String</code> formatted.
-     */
-    public static String toPhoneFormat(String number) {
-        if (number.length() > 7) { // To ensure we are avoiding crash
-            java.text.MessageFormat phoneMsgFmt = new java.text.MessageFormat("{0} {1} {2} {3}");
-            String[] phoneNumArr = {
-                    number.substring(0, 3),
-                    number.substring(3, 5),
-                    number.substring(5, 7),
-                    number.substring(7)};
-            return phoneMsgFmt.format(phoneNumArr);
-        }
-        return number;
-    }
-
-    /**
      * Check if one app is installed from its package name.
      * @param context Related context.
      * @param packageName Package name of the application.
@@ -332,21 +309,23 @@ public class G {
     }
 
     /**
-     * Gives opacity to a <code>View</code> when it is pressed and return to full opacity when user release it.
-     * @param v View to perform.
+     * Gives opacity to an array of <code>View</code> when they are pressed (separately) and return to full opacity when user unpresses some of them.
+     * @param views Related views.
      */
-    public static void setAlphaSelector(View v) {
-        v.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setAlpha(0.5f);
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    v.setAlpha(1);
+    public static void setAlphaSelector(View... views) {
+        for (View view : views) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) { // Pressed
+                        v.setAlpha(0.5f); // Half visible
+                    } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) { // Unpressed
+                        v.setAlpha(1); // Full opacity
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -368,6 +347,26 @@ public class G {
                 return false;
             }
         });
+    }
+
+    /**
+     * Gives darkness to an array of <code>ImageView</code> when they are pressed (separately) and return to full opacity when user unpresses some of them.
+     * @param views Related views.
+     */
+    public static void setDarkSelector(View... views) {
+        for (View view : views) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) { // Pressed
+                        ((ImageView) v).setColorFilter(Color.rgb(123, 123, 123), PorterDuff.Mode.MULTIPLY);
+                    } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) { // Unpressed
+                        ((ImageView) v).clearColorFilter();
+                    }
+                    return false;
+                }
+            });
+        }
     }
 
     /**
@@ -456,5 +455,78 @@ public class G {
     public static void refreshActivity(Activity activity) {
         activity.finish();
         activity.startActivity(activity.getIntent());
+    }
+
+    //    private static final NavigableMap<Long, String> suffixes = new TreeMap<>();
+//
+//    static {
+//        suffixes.put(1_000L, "k");
+//        suffixes.put(1_000_000L, "M");
+//        suffixes.put(1_000_000_000L, "G");
+//        suffixes.put(1_000_000_000_000L, "T");
+//        suffixes.put(1_000_000_000_000_000L, "P");
+//        suffixes.put(1_000_000_000_000_000_000L, "E");
+//    }
+
+    public static String formatNumber(long value) {
+        NavigableMap<Long, String> suffixes = new TreeMap<>();
+        suffixes.put(1_000L, "k");
+        suffixes.put(1_000_000L, "M");
+
+        //Long.MIN_VALUE == -Long.MIN_VALUE so we need an adjustment here
+        if (value == Long.MIN_VALUE) return formatNumber(Long.MIN_VALUE + 1);
+        if (value < 0) return "-" + formatNumber(-value);
+        if (value < 1000) return Long.toString(value); //deal with easy case
+
+        Map.Entry<Long, String> e = suffixes.floorEntry(value);
+        Long divideBy = e.getKey();
+        String suffix = e.getValue();
+
+        long truncated = value / (divideBy / 10); //the number part of the output times 10
+        boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
+        return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
+    }
+
+    public static String formatNumberWithCommas(long number) {
+        return new DecimalFormat("#,###,###").format(number);
+    }
+
+    public static String formatTime(long ms, String[] magnitudes) {
+        final int SECOND = 1000;
+        final int MINUTE = 60 * SECOND;
+        final int HOUR = 60 * MINUTE;
+        final int DAY = 24 * HOUR;
+
+        String day = " " + magnitudes[0];
+        String days = " " + magnitudes[1];
+        String hour = " " + magnitudes[2];
+        String hours = " " + magnitudes[3];
+        String minute = " " + magnitudes[4];
+        String minutes = " " + magnitudes[5];
+        String lessThanAMinuteAgo = " " + magnitudes[6];
+
+        StringBuilder sb = new StringBuilder();
+        if (ms >= DAY) {
+            if (ms < DAY * 2) {
+                return sb.append(ms / DAY).append(day).toString();
+            } else {
+                return sb.append(ms / DAY).append(days).toString();
+            }
+        }
+        if (ms >= HOUR) {
+            if (ms < HOUR * 2) {
+                return sb.append(ms / HOUR).append(hour).toString();
+            } else {
+                return sb.append(ms / HOUR).append(hours).toString();
+            }
+        }
+        if (ms >= MINUTE) {
+            if (ms < MINUTE * 2) {
+                return sb.append(ms / MINUTE).append(minute).toString();
+            } else {
+                return sb.append(ms / MINUTE).append(minutes).toString();
+            }
+        }
+        return sb.append(lessThanAMinuteAgo).toString();
     }
 }

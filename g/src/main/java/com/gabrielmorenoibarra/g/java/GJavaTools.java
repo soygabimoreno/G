@@ -10,8 +10,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Java Standard Tools.
@@ -229,7 +235,20 @@ public class GJavaTools {
             default:
                 System.err.println("Magnitude parameter inserted doesn't exists. Please, use 'MB' or 'KB'.");
         }
-        System.out.println(fileName + " size: " + (new File(fileName).length() / divisor) + " " + magnitude);
+        System.out.println(fileName + " size: " + (getSizeFile(fileName) / divisor) + " " + magnitude);
+    }
+
+    /**
+     * @param fileName Absolute path of the file.
+     * @return the size of a file in bytes.
+     */
+    public static long getSizeFile(String fileName) {
+        File file = new File(fileName);
+        if (file.exists()) {
+            return file.length();
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -239,5 +258,130 @@ public class GJavaTools {
      */
     public static float round(float number, int decimals) {
         return (float) (Math.round(number * Math.pow(10, decimals)) / Math.pow(10, decimals));
+    }
+
+    /**
+     * Format a number of milliseconds to '00:00:00' format.
+     * @param milliseconds Number of milliseconds.
+     * @return a <code>String</code> formatted.
+     */
+    public static String toTimeFormat(long milliseconds) {
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(milliseconds),
+                TimeUnit.MILLISECONDS.toMinutes(milliseconds) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(milliseconds)),
+                TimeUnit.MILLISECONDS.toSeconds(milliseconds) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds)));
+    }
+
+    /**
+     * Format a String as a phone number.
+     * @param number the phone number.
+     * @return a <code>String</code> formatted.
+     */
+    public static String toPhoneFormat(String number) {
+        if (number.length() > 7) { // To ensure we are avoiding crash
+            java.text.MessageFormat phoneMsgFmt = new java.text.MessageFormat("{0} {1} {2} {3}");
+            String[] phoneNumArr = {
+                    number.substring(0, 3),
+                    number.substring(3, 5),
+                    number.substring(5, 7),
+                    number.substring(7)};
+            return phoneMsgFmt.format(phoneNumArr);
+        }
+        return number;
+    }
+
+    //    private static final NavigableMap<Long, String> suffixes = new TreeMap<>();
+//
+//    static {
+//        suffixes.put(1_000L, "k");
+//        suffixes.put(1_000_000L, "M");
+//        suffixes.put(1_000_000_000L, "G");
+//        suffixes.put(1_000_000_000_000L, "T");
+//        suffixes.put(1_000_000_000_000_000L, "P");
+//        suffixes.put(1_000_000_000_000_000_000L, "E");
+//    }
+
+    public static String formatNumber(long value) {
+        NavigableMap<Long, String> suffixes = new TreeMap<>();
+        suffixes.put(1_000L, "k");
+        suffixes.put(1_000_000L, "M");
+
+        //Long.MIN_VALUE == -Long.MIN_VALUE so we need an adjustment here
+        if (value == Long.MIN_VALUE) return formatNumber(Long.MIN_VALUE + 1);
+        if (value < 0) return "-" + formatNumber(-value);
+        if (value < 1000) return Long.toString(value); //deal with easy case
+
+        Map.Entry<Long, String> e = suffixes.floorEntry(value);
+        Long divideBy = e.getKey();
+        String suffix = e.getValue();
+
+        long truncated = value / (divideBy / 10); //the number part of the output times 10
+        boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
+        return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
+    }
+
+    public static String formatNumberWithCommas(long number) {
+        return new DecimalFormat("#,###,###").format(number);
+    }
+
+    public static String formatTime(long ms, String[] magnitudes) {
+        final int SECOND = 1000;
+        final int MINUTE = 60 * SECOND;
+        final int HOUR = 60 * MINUTE;
+        final int DAY = 24 * HOUR;
+
+        String day = " " + magnitudes[0];
+        String days = " " + magnitudes[1];
+        String hour = " " + magnitudes[2];
+        String hours = " " + magnitudes[3];
+        String minute = " " + magnitudes[4];
+        String minutes = " " + magnitudes[5];
+        String lessThanAMinuteAgo = " " + magnitudes[6];
+
+        StringBuilder sb = new StringBuilder();
+        if (ms >= DAY) {
+            if (ms < DAY * 2) {
+                return sb.append(ms / DAY).append(day).toString();
+            } else {
+                return sb.append(ms / DAY).append(days).toString();
+            }
+        }
+        if (ms >= HOUR) {
+            if (ms < HOUR * 2) {
+                return sb.append(ms / HOUR).append(hour).toString();
+            } else {
+                return sb.append(ms / HOUR).append(hours).toString();
+            }
+        }
+        if (ms >= MINUTE) {
+            if (ms < MINUTE * 2) {
+                return sb.append(ms / MINUTE).append(minute).toString();
+            } else {
+                return sb.append(ms / MINUTE).append(minutes).toString();
+            }
+        }
+        return sb.append(lessThanAMinuteAgo).toString();
+    }
+
+    private static final String separator = ";";
+    /**
+     * Splits a String separated with a specific character in a ArrayList.
+     * @param s String to parse.
+     * @return an <code>ArrayList</code>.
+     */
+    public static ArrayList<String> stringToArrayList(String s) {
+        if (s != null) {
+            return new ArrayList<>(Arrays.asList(s.split(separator)));
+        }
+        return new ArrayList<>(0);
+    }
+
+    public static String arrayListToString(ArrayList<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : list) {
+            sb.append(s).append(separator);
+        }
+        int length = sb.length();
+        return sb.substring(0, length - separator.length());
     }
 }
