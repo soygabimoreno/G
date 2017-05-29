@@ -23,7 +23,8 @@ G.metodName();
 GJavaTools.metodName();
 ...
 ```
-## Android classes
+## ANDROID
+### Classes with all statics methods
 - `G` Android Tools.
 - `GFile` Utilities to deal with files.
 - `GGraphics` Static utilities related with graphic side.
@@ -31,8 +32,7 @@ GJavaTools.metodName();
 - `GMedia` Static Media Utilities.
 - `GPermission` This class contains static methods that use permissions.
 
-Or use easily any of the other Android classes included:
-
+### Utils
 - `GCameraPreview` Camera preview management.
 - `GLocation` Location management.
 - `GOnClickAndDoubleClickListener` Touch Listener.
@@ -40,11 +40,13 @@ Or use easily any of the other Android classes included:
 
 ### view
 This package contains useful classes for creating UIs.
+
 - `GPreLoadWebView` Custom `WebView` for pre-loading management.
 - `GPullBackLayout` Custom `FrameLayout` for creating activities that finish when user swipe down.
 - `GSimpleDividerItemDecoration` Custom item for decorating lists.
 
-## Pure Java classes
+## JAVA
+### Classes with all statics methods
 - `GArray` Array tools.
 - `GEmoji` Container with strings that will be parsed as emojis.
 - `GJavaTools` Generic Java utilities.
@@ -52,8 +54,7 @@ This package contains useful classes for creating UIs.
 - `GResampling` Resampling tools: decimate, interpolate.
 - `GValidations` Login tools.
 
-Or use easily any of the other pure Java classes included:
-
+### Utils
 - `GCrypt` Utility for encrypting/decrypting messages.
 - `GISO` Tool for getting the country ISO from country code and vice versa.
 - `GLastModified` Obtain last modified date (in ms) of a remote file.
