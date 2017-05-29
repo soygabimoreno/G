@@ -11,7 +11,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile 'com.gabrielmorenoibarra.g:g:0.3.1'
+    compile 'com.gabrielmorenoibarra.g:g:0.4.0'
 }
 ```
 
@@ -38,7 +38,7 @@ Or use easily any of the other Android classes included:
 - `GOnClickAndDoubleClickListener` Touch Listener.
 - `GShowHideKeyboard` Utility to show or hide the soft keyboard.
 
-# view
+### view
 This package contains useful classes for creating UIs.
 - `GPreLoadWebView` Custom `WebView` for pre-loading management.
 - `GPullBackLayout` Custom `FrameLayout` for creating activities that finish when user swipe down.
