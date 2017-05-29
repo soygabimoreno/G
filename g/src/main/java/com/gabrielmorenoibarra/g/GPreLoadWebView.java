@@ -1,4 +1,4 @@
-package com.gabrielmorenoibarra.g.view;
+package com.gabrielmorenoibarra.g;
 
 import android.app.Activity;
 import android.app.AlertDialog;

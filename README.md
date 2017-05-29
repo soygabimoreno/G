@@ -36,14 +36,8 @@ GJavaTools.metodName();
 - `GCameraPreview` Camera preview management.
 - `GLocation` Location management.
 - `GOnClickAndDoubleClickListener` Touch Listener.
-- `GShowHideKeyboard` Utility to show or hide the soft keyboard.
-
-### view
-This package contains useful classes for creating UIs.
-
 - `GPreLoadWebView` Custom `WebView` for pre-loading management.
-- `GPullBackLayout` Custom `FrameLayout` for creating activities that finish when user swipe down.
-- `GSimpleDividerItemDecoration` Custom item for decorating lists.
+- `GShowHideKeyboard` Utility to show or hide the soft keyboard.
 
 ## JAVA
 ### Classes with all statics methods
