@@ -38,6 +38,12 @@ Or use easily any of the other Android classes included:
 - `GOnClickAndDoubleClickListener` Touch Listener.
 - `GShowHideKeyboard` Utility to show or hide the soft keyboard.
 
+# view
+This package contains useful classes for creating UIs.
+- `GPreLoadWebView` Custom `WebView` for pre-loading management.
+- `GPullBackLayout` Custom `FrameLayout` for creating activities that finish when user swipe down.
+- `GSimpleDividerItemDecoration` Custom item for decorating lists.
+
 ## Pure Java classes
 - `GArray` Array tools.
 - `GEmoji` Container with strings that will be parsed as emojis.
