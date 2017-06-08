@@ -333,7 +333,7 @@ public class G {
      * @param v View above.
      * @param vBelow View below the image that the one that is really "clicking".
      */
-    public static void setAlphaSelector(View v, final View vBelow) {
+    public static void setAlphaSelectorToViewAndBelowView(View v, final View vBelow) {
         v.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
