@@ -340,7 +340,7 @@ public class G {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     v.setAlpha(0.5f);
                     vBelow.setAlpha(0); // Invisible when other is clicked
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                     v.setAlpha(1);
                     vBelow.setAlpha(1);
                 }
