@@ -517,6 +517,12 @@ public class G {
 
     private static Toast toast;
 
+    /**
+     * Show a toast to the user.
+     * @param context Related context.
+     * @param text Text to show.
+     * @param duration Duration whereas the text will be shown.
+     */
     public static void showToast(Context context, String text, int duration) {
         if (toast != null) toast.cancel();
         toast = Toast.makeText(context, text, duration);
