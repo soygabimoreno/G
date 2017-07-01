@@ -11,23 +11,18 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.display.DisplayManager;
-import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -36,17 +31,9 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.gabrielmorenoibarra.g.java.GJavaTools;
-
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -56,11 +43,9 @@ import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Android Tools.
@@ -68,8 +53,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class G {
 
-     /**
-      * Require permissions: INTERNET, ACCESS_WIFI_STATE and ACCESS_NETWORK_STATE.
+    /**
+     * Require permissions: INTERNET, ACCESS_WIFI_STATE and ACCESS_NETWORK_STATE.
      * @param context Related context.
      * @return the name of the connected network or null if there in no internet.
      */
@@ -528,5 +513,13 @@ public class G {
             }
         }
         return sb.append(lessThanAMinuteAgo).toString();
+    }
+
+    private static Toast toast;
+
+    public static void showToast(Context context, String text, int duration) {
+        if (toast != null) toast.cancel();
+        toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }
