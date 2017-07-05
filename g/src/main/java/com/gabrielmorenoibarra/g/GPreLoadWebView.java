@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 /**
@@ -43,6 +44,7 @@ public class GPreLoadWebView {
 
         if (context != null && !((Activity) context).isFinishing()) {
             WebView wv = new WebView(context);
+            wv.setWebViewClient(new WebViewClient());
             wv.loadUrl(url);
             WebSettings webSettings = wv.getSettings();
             webSettings.setJavaScriptEnabled(true);
