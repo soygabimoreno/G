@@ -40,9 +40,11 @@ import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -472,8 +474,8 @@ public class G {
         return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
     }
 
-    public static String formatNumberWithCommas(long number) {
-        return new DecimalFormat("#,###,###").format(number);
+    public static String formatNumberWithSeparator(long number) {
+        return NumberFormat.getInstance(Locale.getDefault()).format(number);
     }
 
     public static String formatTime(long ms, String[] magnitudes) {
