@@ -20,6 +20,7 @@ public class GTicToc {
 
     /**
      * Show how many milliseconds elapse between 'tic' and 'toc'.
+     * There is to set 'tic' with <code>System.currentTimeMillis()</code> on constructor.
      */
     public void toc() {
         if (tag != null) tag += ": ";
@@ -28,9 +29,19 @@ public class GTicToc {
 
     /**
      * Show how many nanoseconds elapse between 'tic' and 'toc'.
+     * There is to set 'tic' with <code>System.nanoTime()</code> on constructor.
      */
     public void tocNano() {
         if (tag != null) tag += ": ";
         System.out.println("TIME: " + tag + (System.nanoTime() - tic) + " ns");
+    }
+
+    /**
+     * Show how many microseconds elapse between 'tic' and 'toc'.
+     * There is to set 'tic' with <code>System.nanoTime()</code> on constructor.
+     */
+    public void tocMicro() {
+        if (tag != null) tag += ": ";
+        System.out.println("TIME: " + tag + (System.nanoTime() - tic) / 1000 + " us");
     }
 }
