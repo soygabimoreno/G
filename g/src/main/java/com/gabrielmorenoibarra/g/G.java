@@ -483,16 +483,36 @@ public class G {
         final int MINUTE = 60 * SECOND;
         final int HOUR = 60 * MINUTE;
         final int DAY = 24 * HOUR;
+        final long MONTH = 30L * DAY;
+        final long YEAR = 365L * DAY;
 
-        String day = " " + magnitudes[0];
-        String days = " " + magnitudes[1];
-        String hour = " " + magnitudes[2];
-        String hours = " " + magnitudes[3];
-        String minute = " " + magnitudes[4];
-        String minutes = " " + magnitudes[5];
-        String lessThanAMinuteAgo = " " + magnitudes[6];
+        String year = " " + magnitudes[0];
+        String years = " " + magnitudes[1];
+        String month = " " + magnitudes[2];
+        String months = " " + magnitudes[3];
+        String day = " " + magnitudes[4];
+        String days = " " + magnitudes[5];
+        String hour = " " + magnitudes[6];
+        String hours = " " + magnitudes[7];
+        String minute = " " + magnitudes[8];
+        String minutes = " " + magnitudes[9];
+        String lessThanAMinuteAgo = " " + magnitudes[10];
 
         StringBuilder sb = new StringBuilder();
+        if (ms >= YEAR) {
+            if (ms < YEAR * 2) {
+                return sb.append(ms / YEAR).append(year).toString();
+            } else {
+                return sb.append(ms / YEAR).append(years).toString();
+            }
+        }
+        if (ms >= MONTH) {
+            if (ms < MONTH * 2) {
+                return sb.append(ms / MONTH).append(month).toString();
+            } else {
+                return sb.append(ms / MONTH).append(months).toString();
+            }
+        }
         if (ms >= DAY) {
             if (ms < DAY * 2) {
                 return sb.append(ms / DAY).append(day).toString();
