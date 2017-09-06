@@ -15,7 +15,7 @@ dependencies {
 }
 ```
 
-# Use
+# Usage
 Simply call any method directly over classes in a static way:
 
 ```java
