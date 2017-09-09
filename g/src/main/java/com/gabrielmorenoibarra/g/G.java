@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -54,6 +53,20 @@ import java.util.TreeMap;
  * Created by Gabriel Moreno on 2016-11-08.
  */
 public class G {
+
+    private static final int SECOND = 1000;
+    private static final int MINUTE = 60 * SECOND;
+    private static final int HOUR = 60 * MINUTE;
+    private static final int DAY = 24 * HOUR;
+    private static final long MONTH = 30L * DAY;
+    private static final long YEAR = 365L * DAY;
+
+    public static final int MAGNITUDE_SECONDS = 0;
+    public static final int MAGNITUDE_MINUTES = 1;
+    public static final int MAGNITUDE_HOURS = 2;
+    public static final int MAGNITUDE_DAYS = 3;
+    public static final int MAGNITUDE_MONTHS = 4;
+    public static final int MAGNITUDE_YEARS = 5;
 
     /**
      * Require permissions: INTERNET, ACCESS_WIFI_STATE and ACCESS_NETWORK_STATE.
@@ -479,13 +492,6 @@ public class G {
     }
 
     public static String formatTime(long ms, String[] magnitudes) {
-        final int SECOND = 1000;
-        final int MINUTE = 60 * SECOND;
-        final int HOUR = 60 * MINUTE;
-        final int DAY = 24 * HOUR;
-        final long MONTH = 30L * DAY;
-        final long YEAR = 365L * DAY;
-
         String year = " " + magnitudes[0];
         String years = " " + magnitudes[1];
         String month = " " + magnitudes[2];
@@ -535,6 +541,28 @@ public class G {
             }
         }
         return sb.append(lessThanAMinuteAgo).toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println("RES: " + getMillis(MAGNITUDE_YEARS, 1));
+    }
+
+    public static long getMillis(int magnitude, int time) {
+        switch (magnitude) {
+            case MAGNITUDE_SECONDS:
+                return time * SECOND;
+            case MAGNITUDE_MINUTES:
+                return time * MINUTE;
+            case MAGNITUDE_HOURS:
+                return time * HOUR;
+            case MAGNITUDE_DAYS:
+                return time * DAY;
+            case MAGNITUDE_MONTHS:
+                return time * MONTH;
+            case MAGNITUDE_YEARS:
+                return time * YEAR;
+        }
+        return -1;
     }
 
     private static Toast toast;
