@@ -13,16 +13,18 @@ public class GIntermittence {
     private TextView tv;
     private String on;
     private String off;
+    private long millisInFuture;
 
-    public GIntermittence(TextView tv, String on, String off) {
+    public GIntermittence(TextView tv, String on, String off, long millisInFuture) {
         this.tv = tv;
         this.on = on;
         this.off = off;
+        this.millisInFuture = millisInFuture;
     }
 
     public void start() {
         tv.setText(off);
-        countDownTimerIntermittence = new CountDownTimer(60 * 1000, 500) {
+        countDownTimerIntermittence = new CountDownTimer(millisInFuture, 500) {
             public void onTick(long millisUntilFinished) {
                 if (tv.getAlpha() == 0.5f) {
                     tv.setAlpha(1f);
