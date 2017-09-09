@@ -543,10 +543,6 @@ public class G {
         return sb.append(lessThanAMinuteAgo).toString();
     }
 
-    public static void main(String[] args) {
-        System.out.println("RES: " + getMillis(MAGNITUDE_YEARS, 1));
-    }
-
     public static long getMillis(int magnitude, int time) {
         switch (magnitude) {
             case MAGNITUDE_SECONDS:
