@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -20,6 +21,24 @@ import java.util.Locale;
  * Created by Gabriel Moreno on 2017-05-28.
  */
 public class GLog {
+
+    public static boolean debug;
+
+    public static void d(String tag, String msg) {
+        if (debug) Log.d(tag, msg);
+    }
+
+    public static void i(String tag, String msg) {
+        if (debug) Log.i(tag, msg);
+    }
+
+    public static void w(String tag, String msg) {
+        if (debug) Log.w(tag, msg);
+    }
+
+    public static void e(String tag, String msg) {
+        if (debug) Log.e(tag, msg);
+    }
 
     public static void sendLogByEmail(Context context, String email) {
         File file = getLogFile(context);
