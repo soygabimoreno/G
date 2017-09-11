@@ -40,6 +40,10 @@ public class GLog {
         if (debug) Log.e(tag, msg);
     }
 
+    public static String getMethodName(String msg) {
+        return debug ? msg : null;
+    }
+
     public static void sendLogByEmail(Context context, String email) {
         File file = getLogFile(context);
         String subject = "[DEBUG] " + Build.MANUFACTURER + " " + Build.MODEL + " v" + BuildConfig.VERSION_NAME +
