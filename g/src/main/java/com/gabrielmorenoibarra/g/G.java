@@ -83,7 +83,7 @@ public class G {
             NetworkInfo networkInfo;
             for (Network mNetwork : networks) {
                 networkInfo = connectivityManager.getNetworkInfo(mNetwork);
-                if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+                if (networkInfo != null && networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
                     String netWorkName = networkInfo.getTypeName();
                     Log.i(TAG, networkInfo.getTypeName() + " network connected!");
                     return netWorkName;
@@ -95,7 +95,7 @@ public class G {
                 NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
                 if (info != null) {
                     for (NetworkInfo anInfo : info) {
-                        if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
+                        if (anInfo != null && anInfo.getState() == NetworkInfo.State.CONNECTED) {
                             String netWorkName = anInfo.getTypeName();
                             Log.i(TAG, anInfo.getTypeName() + " network connected!");
                             return netWorkName;
