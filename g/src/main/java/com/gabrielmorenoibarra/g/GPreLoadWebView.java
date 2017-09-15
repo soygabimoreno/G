@@ -30,7 +30,7 @@ public class GPreLoadWebView {
     private DialogInterface.OnClickListener dialogClickListener;
 
     public GPreLoadWebView(final Context context, String url, int themeResId, int okResId,
-                           String titleSystemWebViewNotInstalled, String messageSystemWebViewNotInstalled) {
+                           int titleSystemWebViewNotInstalledResId, int messageSystemWebViewNotInstalledResId) {
         this.context = context;
         this.themeResId = themeResId;
         this.okResId = okResId;
@@ -58,8 +58,8 @@ public class GPreLoadWebView {
             }
         } else {
             new AlertDialog.Builder(context)
-                    .setTitle(titleSystemWebViewNotInstalled)
-                    .setMessage(messageSystemWebViewNotInstalled)
+                    .setTitle(titleSystemWebViewNotInstalledResId)
+                    .setMessage(messageSystemWebViewNotInstalledResId)
                     .setCancelable(false)
                     .setPositiveButton(okResId, new DialogInterface.OnClickListener() {
                         @Override
