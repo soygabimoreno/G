@@ -20,10 +20,18 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
 
     private SurfaceHolder holder;
     private Camera camera;
-    private Camera.Size size;
+    private Camera.Size previewSize;
+    private Camera.Size videoSize;
     private boolean cameraFront;
     private boolean opened;
     private int orientationHint;
+    private int cameraId = -1;
+
+    private Listener listener;
+
+    public interface Listener {
+        void onCameraOpened(int cameraId);
+    }
 
     public GCameraPreview(Context context) {
         super(context);
@@ -33,11 +41,10 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
+        GLog.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
         try {
             if (camera != null) {
                 camera.setPreviewDisplay(holder);
-                camera.startPreview();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,13 +53,13 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
+        GLog.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
         refreshCamera();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
+        GLog.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
         // Camera has been released yet within onPause() within the Activity
     }
 
@@ -61,6 +68,7 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
             return;
         }
         try {
+//            ensureCamera(); // ERASE
             camera.stopPreview(); // Stop preview before making changes
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,6 +76,12 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
 
         try {
             camera.setPreviewDisplay(holder);
+            Camera.Parameters parameters = camera.getParameters();
+            previewSize = getMaximumPreviewSize();
+            videoSize = getMaximumVideoSize();
+
+            parameters.setPreviewSize(previewSize.width, previewSize.height);
+            camera.setParameters(parameters);
             camera.startPreview();
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,6 +92,7 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
      * Lock the camera object for later use.
      */
     public void lock() {
+        ensureCamera();
         try {
             camera.lock();
         } catch (Exception e) {
@@ -86,13 +101,24 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
     }
 
     public boolean unlock() {
+        ensureCamera();
         try { // This is due to unlock can make a crash
             camera.unlock();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return false;
+    }
+
+    private void ensureCamera() {
+        if (camera == null) {
+            if (cameraFront) {
+                switchCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
+            } else {
+                switchCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
+            }
+        }
     }
 
     /**
@@ -100,26 +126,12 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
      * @param cameraFacing Indicate if it is front camera: CAMERA_FACING_FRONT or rear camera: CAMERA_FACING_BACK.
      */
     public void switchCamera(int cameraFacing) {
-        Log.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
+        GLog.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
         try {
             releaseCamera();
-            List<Camera.Size> sizes = null;
-            int cameraId = findCamera(cameraFacing);
+            findCamera(cameraFacing);
             if (cameraId >= 0) {
                 camera = Camera.open(cameraId);
-                Camera.Parameters parameters = camera.getParameters();
-                List<Camera.Size> supportedVideoSizes = parameters.getSupportedVideoSizes();
-                if (supportedVideoSizes != null) {
-                    size = supportedVideoSizes.get(0);
-                    sizes = supportedVideoSizes;
-                } else {
-                    List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
-                    if (supportedPreviewSizes != null) {
-                        size = supportedPreviewSizes.get(0);
-                        sizes = supportedPreviewSizes;
-                    }
-                }
-
                 if (cameraFacing == Camera.CameraInfo.CAMERA_FACING_BACK) {
                     orientationHint = 90;
                     camera.setDisplayOrientation(90); // Use vertical video
@@ -135,36 +147,25 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
                     } else {  // back-facing
                         result = (info.orientation - degrees + 360) % 360;
                     }
-                    Log.i(TAG, "degrees: " + degrees + ", result: " + result + ", info.orientation: " + info.orientation);
+                    GLog.i(TAG, "degrees: " + degrees + ", result: " + result + ", info.orientation: " + info.orientation);
 
                     orientationHint = info.orientation;
                     camera.setDisplayOrientation(result);
-
-                    parameters.setPreviewSize(size.width, size.height);
-                    try { // To avoid crashes
-                        camera.setParameters(parameters);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
                 opened = true;
             }
-            if (sizes != null) {
-                for (int i = 0; i < sizes.size(); i++) {
-                    if (sizes.get(i).width > size.width) { // Get the maximum resolution
-                        size = sizes.get(i);
-                    }
-                }
-            }
             refreshCamera();
+            if (listener != null) {
+                listener.onCameraOpened(cameraId);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public int findCamera(int cameraFacing) {
-        Log.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
-        int cameraId = -1;
+        GLog.d(TAG, Thread.currentThread().getStackTrace()[2].getMethodName() + " " + hashCode());
+        cameraId = -1;
         for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
             Camera.CameraInfo info = new Camera.CameraInfo();
             Camera.getCameraInfo(i, info);
@@ -214,8 +215,30 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
         return camera;
     }
 
-    public Camera.Size getSize() {
+    private Camera.Size getMaximumPreviewSize() {
+        return getMaximumSize(camera.getParameters().getSupportedPreviewSizes());
+    }
+
+    private Camera.Size getMaximumVideoSize() {
+        return getMaximumSize(camera.getParameters().getSupportedVideoSizes());
+    }
+
+    private Camera.Size getMaximumSize(List<Camera.Size> sizes) {
+        Camera.Size size = sizes.get(0);
+        for (int i = 0; i < sizes.size(); i++) {
+            if (sizes.get(i).width > size.width) { // Get the maximum resolution
+                size = sizes.get(i);
+            }
+        }
         return size;
+    }
+
+    public Camera.Size getPreviewSize() {
+        return previewSize;
+    }
+
+    public Camera.Size getVideoSize() {
+        return videoSize != null ? videoSize : previewSize;
     }
 
     public boolean isOpened() {
@@ -224,5 +247,13 @@ public class GCameraPreview extends SurfaceView implements SurfaceHolder.Callbac
 
     public int getOrientationHint() {
         return orientationHint;
+    }
+
+    public int getCameraId() {
+        return cameraId;
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 }
