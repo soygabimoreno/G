@@ -21,13 +21,16 @@ public class GPreLoadWebView {
 
     public static final String TAG = GPreLoadWebView.class.getSimpleName();
 
+    private static final String PACKAGE_NAME_WEB_VIEW = "com.google.android.webview";
+
     private Context context;
     private int themeResId;
     private int okResId;
     private LinearLayout layout;
     private DialogInterface.OnClickListener dialogClickListener;
 
-    public GPreLoadWebView(Context context, String url, int themeResId, int okResId) {
+    public GPreLoadWebView(final Context context, String url, int themeResId, int okResId,
+                           String titleSystemWebViewNotInstalled, String messageSystemWebViewNotInstalled) {
         this.context = context;
         this.themeResId = themeResId;
         this.okResId = okResId;
@@ -42,15 +45,29 @@ public class GPreLoadWebView {
             }
         };
 
-        if (context != null && !((Activity) context).isFinishing()) {
-            WebView wv = new WebView(context);
-            wv.setWebViewClient(new WebViewClient());
-            wv.loadUrl(url);
-            WebSettings webSettings = wv.getSettings();
-            webSettings.setJavaScriptEnabled(true);
+        if (context != null && G.isPackageInstalled(context, PACKAGE_NAME_WEB_VIEW)) {
+            if (!((Activity) context).isFinishing()) {
+                WebView wv = new WebView(context);
+                wv.setWebViewClient(new WebViewClient());
+                wv.loadUrl(url);
+                WebSettings webSettings = wv.getSettings();
+                webSettings.setJavaScriptEnabled(true);
 
-            layout = new LinearLayout(context);
-            layout.addView(wv);
+                layout = new LinearLayout(context);
+                layout.addView(wv);
+            }
+        } else {
+            new AlertDialog.Builder(context)
+                    .setTitle(titleSystemWebViewNotInstalled)
+                    .setMessage(messageSystemWebViewNotInstalled)
+                    .setCancelable(false)
+                    .setPositiveButton(okResId, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            G.goToMarket(context, PACKAGE_NAME_WEB_VIEW);
+                        }
+                    })
+                    .create().show();
         }
     }
 
