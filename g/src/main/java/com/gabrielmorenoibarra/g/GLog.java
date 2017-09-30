@@ -30,8 +30,16 @@ public class GLog {
         if (debug) Log.w(tag, msg);
     }
 
+    public static void w(String tag, String msg, Throwable tr) {
+        if (debug) Log.w(tag, msg, tr);
+    }
+
     public static void e(String tag, String msg) {
         if (debug) Log.e(tag, msg);
+    }
+
+    public static void e(String tag, String msg, Throwable tr) {
+        if (debug) Log.e(tag, msg, tr);
     }
 
     public static String getMethodName(String msg) {
