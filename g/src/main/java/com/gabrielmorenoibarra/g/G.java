@@ -56,12 +56,12 @@ import java.util.TreeMap;
  */
 public class G {
 
-    private static final int SECOND = 1000;
-    private static final int MINUTE = 60 * SECOND;
-    private static final int HOUR = 60 * MINUTE;
-    private static final int DAY = 24 * HOUR;
-    private static final long MONTH = 30L * DAY;
-    private static final long YEAR = 365L * DAY;
+    public static final int SECOND_IN_MILLIS = 1000;
+    public static final int MINUTE_IN_MILLIS = 60 * SECOND_IN_MILLIS;
+    public static final int HOUR_IN_MILLIS = 60 * MINUTE_IN_MILLIS;
+    public static final int DAY_IN_MILLIS = 24 * HOUR_IN_MILLIS;
+    public static final long MONTH_IN_MILLIS = 30L * DAY_IN_MILLIS;
+    public static final long YEAR_IN_MILLIS = 365L * DAY_IN_MILLIS;
 
     public static final int MAGNITUDE_SECONDS = 0;
     public static final int MAGNITUDE_MINUTES = 1;
@@ -507,39 +507,39 @@ public class G {
         String lessThanAMinuteAgo = " " + magnitudes[10];
 
         StringBuilder sb = new StringBuilder();
-        if (ms >= YEAR) {
-            if (ms < YEAR * 2) {
-                return sb.append(ms / YEAR).append(year).toString();
+        if (ms >= YEAR_IN_MILLIS) {
+            if (ms < YEAR_IN_MILLIS * 2) {
+                return sb.append(ms / YEAR_IN_MILLIS).append(year).toString();
             } else {
-                return sb.append(ms / YEAR).append(years).toString();
+                return sb.append(ms / YEAR_IN_MILLIS).append(years).toString();
             }
         }
-        if (ms >= MONTH) {
-            if (ms < MONTH * 2) {
-                return sb.append(ms / MONTH).append(month).toString();
+        if (ms >= MONTH_IN_MILLIS) {
+            if (ms < MONTH_IN_MILLIS * 2) {
+                return sb.append(ms / MONTH_IN_MILLIS).append(month).toString();
             } else {
-                return sb.append(ms / MONTH).append(months).toString();
+                return sb.append(ms / MONTH_IN_MILLIS).append(months).toString();
             }
         }
-        if (ms >= DAY) {
-            if (ms < DAY * 2) {
-                return sb.append(ms / DAY).append(day).toString();
+        if (ms >= DAY_IN_MILLIS) {
+            if (ms < DAY_IN_MILLIS * 2) {
+                return sb.append(ms / DAY_IN_MILLIS).append(day).toString();
             } else {
-                return sb.append(ms / DAY).append(days).toString();
+                return sb.append(ms / DAY_IN_MILLIS).append(days).toString();
             }
         }
-        if (ms >= HOUR) {
-            if (ms < HOUR * 2) {
-                return sb.append(ms / HOUR).append(hour).toString();
+        if (ms >= HOUR_IN_MILLIS) {
+            if (ms < HOUR_IN_MILLIS * 2) {
+                return sb.append(ms / HOUR_IN_MILLIS).append(hour).toString();
             } else {
-                return sb.append(ms / HOUR).append(hours).toString();
+                return sb.append(ms / HOUR_IN_MILLIS).append(hours).toString();
             }
         }
-        if (ms >= MINUTE) {
-            if (ms < MINUTE * 2) {
-                return sb.append(ms / MINUTE).append(minute).toString();
+        if (ms >= MINUTE_IN_MILLIS) {
+            if (ms < MINUTE_IN_MILLIS * 2) {
+                return sb.append(ms / MINUTE_IN_MILLIS).append(minute).toString();
             } else {
-                return sb.append(ms / MINUTE).append(minutes).toString();
+                return sb.append(ms / MINUTE_IN_MILLIS).append(minutes).toString();
             }
         }
         return sb.append(lessThanAMinuteAgo).toString();
@@ -548,17 +548,17 @@ public class G {
     public static long getMillis(int magnitude, int time) {
         switch (magnitude) {
             case MAGNITUDE_SECONDS:
-                return time * SECOND;
+                return time * SECOND_IN_MILLIS;
             case MAGNITUDE_MINUTES:
-                return time * MINUTE;
+                return time * MINUTE_IN_MILLIS;
             case MAGNITUDE_HOURS:
-                return time * HOUR;
+                return time * HOUR_IN_MILLIS;
             case MAGNITUDE_DAYS:
-                return time * DAY;
+                return time * DAY_IN_MILLIS;
             case MAGNITUDE_MONTHS:
-                return time * MONTH;
+                return time * MONTH_IN_MILLIS;
             case MAGNITUDE_YEARS:
-                return time * YEAR;
+                return time * YEAR_IN_MILLIS;
         }
         return -1;
     }
