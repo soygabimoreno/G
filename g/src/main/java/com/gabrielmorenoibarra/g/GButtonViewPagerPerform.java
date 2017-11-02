@@ -15,7 +15,7 @@ public class GButtonViewPagerPerform {
     private int textColorDisabled;
     private Button[] buttons;
 
-    private boolean[] selected = new boolean[3];
+    private boolean[] selected;
 
     public GButtonViewPagerPerform(Drawable bgEnabled, Drawable bgDisabled, int textColorEnabled, int textColorDisabled, Button... buttons) {
         this.bgEnabled = bgEnabled;
@@ -23,6 +23,7 @@ public class GButtonViewPagerPerform {
         this.textColorEnabled = textColorEnabled;
         this.textColorDisabled = textColorDisabled;
         this.buttons = buttons;
+        selected = new boolean[buttons.length];
     }
 
     public void switchPerform(int pos) {
