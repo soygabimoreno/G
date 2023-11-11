@@ -71,3 +71,13 @@ GJavaTools.metodName();
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+### Collaborate
+
+I am [Gabi Moreno](https://gabimoreno.soy).
+
+This is an open source project. **Feel free to request issues**.
+
+And for sure, **Pull Requests are opened** and super-well received.
+
+Thank you very much! 🤗
